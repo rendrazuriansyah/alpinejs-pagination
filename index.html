@@ -51,20 +51,32 @@
 				</template>
 			</div>
 			<div class="flex justify-center mt-6">
-				<button class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg">
+				<button
+					@click="prevPage()"
+					:disabled="currentPage === 1"
+					class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg"
+					x-show="currentPage !== 1"
+				>
 					Previous
 				</button>
-				<button
-					class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg mx-1"
+				<template
+					x-for="page in totalPage"
+					:key="page"
 				>
-					<span>1</span>
-				</button>
+					<button
+						@click="changePage(page)"
+						class="px-4 py-2 rounded-lg mx-1"
+						:class="{'bg-blue-500 text-white': currentPage === page, 'bg-gray-300 text-gray-800': currentPage !== page}"
+					>
+						<span x-text="page"></span>
+					</button>
+				</template>
 				<button
-					class="px-4 py-2 bg-blue-500 text-white rounded-lg mx-1"
+					@click="nextPage()"
+					:disabled="currentPage === totalPage"
+					class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg"
+					x-show="currentPage !== totalPage"
 				>
-					<span>2</span>
-				</button>
-				<button class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg">
 					Next
 				</button>
 			</div>

@@ -232,5 +232,18 @@ function paginationComponent() {
 			const end = start + this.perPage;
 			return this.members.slice(start, end);
 		},
+		changePage(page) {
+			this.currentPage = page;
+		},
+		prevPage() {
+			if (this.currentPage > 1) {
+				this.currentPage--;
+			}
+		},
+		nextPage() {
+			if (this.currentPage < this.totalPage) {
+				this.currentPage++;
+			}
+		},
 	};
 }
