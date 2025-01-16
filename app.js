@@ -223,15 +223,17 @@ function paginationComponent() {
 		// 	},
 		// ],
 		members: [],
+		filteredMembers: [],
 		perPage: 6,
 		currentPage: 1,
+		searchQuery: "",
 		get totalPage() {
-			return Math.ceil(this.members.length / this.perPage);
+			return Math.ceil(this.filteredMembers.length / this.perPage);
 		},
 		get paginatedMembers() {
 			const start = (this.currentPage - 1) * this.perPage;
 			const end = start + this.perPage;
-			return this.members.slice(start, end);
+			return this.filteredMembers.slice(start, end);
 		},
 		changePage(page) {
 			this.currentPage = page;
@@ -246,6 +248,14 @@ function paginationComponent() {
 				this.currentPage++;
 			}
 		},
+		searchMembers() {
+			this.filteredMembers = this.members.filter((member) => {
+				const fullName = member.name.toLowerCase();
+				return fullName.includes(this.searchQuery.toLowerCase());
+			});
+
+			this.currentPage = 1;
+		},
 		async fetchMembers() {
 			const response = await fetch(
 				"https://randomuser.me/api/?results=50"
@@ -255,9 +265,11 @@ function paginationComponent() {
 				name: `${member.name.first} ${member.name.last}`,
 				age: member.dob.age,
 				gender: member.gender,
-				address: `${member.location.street.name} ${member.location.street.number}, ${member.location.city}, ${member.location.state}, ${member.location.country}`,
+				address: `${member.location.city}, ${member.location.state}, ${member.location.country}`,
 				photo: member.picture.large,
 			}));
+
+			this.filteredMembers = this.members;
 		},
 		init() {
 			this.fetchMembers();
