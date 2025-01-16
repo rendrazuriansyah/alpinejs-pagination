@@ -8,69 +8,47 @@
 		/>
 		<title>Member List with Pagination</title>
 		<script
+			src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
 			defer
-			src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/alpine.min.js"
 		></script>
 		<link
+			href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
 			rel="stylesheet"
-			href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
 		/>
 	</head>
 	<body class="bg-gray-100 p-6">
-		<div class="container mx-auto">
+		<div
+			x-data="paginationComponent()"
+			class="container mx-auto"
+		>
 			<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-				<div class="bg-white shadow-md rounded-lg overflow-hidden">
-					<img
-						class="w-48 h-48 mx-auto mt-4 object-cover"
-						src="https://randomuser.me/api/portraits/men/1.jpg"
-						alt=""
-					/>
-					<div class="p-4">
-						<h2 class="text-xl font-bold">John Doe</h2>
-						<p class="text-gray-700">Age: 30</p>
-						<p class="text-gray-700">Gender: Male</p>
-						<p class="text-gray-700">Address: 123 Main St</p>
+				<template
+					x-for="(member, index) in paginatedMembers"
+					:key="index"
+				>
+					<div class="bg-white shadow-md rounded-lg overflow-hidden">
+						<img
+							:src="member.photo"
+							alt="Profile Picture"
+							class="w-48 h-48 mx-auto mt-4 object-cover"
+						/>
+						<div class="p-4">
+							<h2
+								class="text-xl font-bold"
+								x-text="member.name"
+							></h2>
+							<p class="text-gray-700">
+								Age: <span x-text="member.age"></span>
+							</p>
+							<p class="text-gray-700">
+								Gender: <span x-text="member.gender"></span>
+							</p>
+							<p class="text-gray-700">
+								Address: <span x-text="member.address"></span>
+							</p>
+						</div>
 					</div>
-				</div>
-				<div class="bg-white shadow-md rounded-lg overflow-hidden">
-					<img
-						class="w-48 h-48 mx-auto mt-4 object-cover"
-						src="https://randomuser.me/api/portraits/men/1.jpg"
-						alt=""
-					/>
-					<div class="p-4">
-						<h2 class="text-xl font-bold">John Doe</h2>
-						<p class="text-gray-700">Age: 30</p>
-						<p class="text-gray-700">Gender: Male</p>
-						<p class="text-gray-700">Address: 123 Main St</p>
-					</div>
-				</div>
-				<div class="bg-white shadow-md rounded-lg overflow-hidden">
-					<img
-						class="w-48 h-48 mx-auto mt-4 object-cover"
-						src="https://randomuser.me/api/portraits/men/1.jpg"
-						alt=""
-					/>
-					<div class="p-4">
-						<h2 class="text-xl font-bold">John Doe</h2>
-						<p class="text-gray-700">Age: 30</p>
-						<p class="text-gray-700">Gender: Male</p>
-						<p class="text-gray-700">Address: 123 Main St</p>
-					</div>
-				</div>
-				<div class="bg-white shadow-md rounded-lg overflow-hidden">
-					<img
-						class="w-48 h-48 mx-auto mt-4 object-cover"
-						src="https://randomuser.me/api/portraits/men/1.jpg"
-						alt=""
-					/>
-					<div class="p-4">
-						<h2 class="text-xl font-bold">John Doe</h2>
-						<p class="text-gray-700">Age: 30</p>
-						<p class="text-gray-700">Gender: Male</p>
-						<p class="text-gray-700">Address: 123 Main St</p>
-					</div>
-				</div>
+				</template>
 			</div>
 			<div class="flex justify-center mt-6">
 				<button class="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg">
